@@ -21,6 +21,7 @@ public class ScenePanel extends JPanel{
     private Point point1F1, point2F1, point1F2, point2F2, point1F3, point2F3, point1F4, point2F4;
 
     private int x1 = 500, x2 = 500;
+    private int xTop1 = 100, xTop2 = 500;
     
     public ScenePanel() {
         setPanelSize();
@@ -43,34 +44,38 @@ public class ScenePanel extends JPanel{
 
         if(firstRotation || fourthRotation)
         {
-            g.setColor(new Color(237,107,107));
+            g.setColor(redSideColor());
             polygonF1 = new Polygon(xPointsF1, yPointsF1, xPointsF1.length);
             g.fillPolygon(polygonF1);
         }
 
         if(firstRotation || secondRotation)
         {
-            g.setColor(new Color(242,237,92));
+            g.setColor(yellowSideColor());
             polygonF2 = new Polygon(xPointsF2, yPointsF2, xPointsF2.length);
             g.fillPolygon(polygonF2);
         }
 
         if(secondRotation || thirdRotation)
         {
-            g.setColor(new Color(130,242,89));
+            g.setColor(greenSideColor());
             polygonF3 = new Polygon(xPointsF3, yPointsF3, xPointsF3.length);
             g.fillPolygon(polygonF3);
         }
 
         if(thirdRotation || fourthRotation)
         {
-            g.setColor(new Color(87,209,242));
+            g.setColor(blueSideColor());
             polygonF4 = new Polygon(xPointsF4, yPointsF4, xPointsF4.length);
             g.fillPolygon(polygonF4);
         }
 
         g.setColor(new Color(0,0,0));
         g.drawLine(x1, 100, x2, 500);
+        g.drawLine(xTop1, 100, xTop2, 100);
+        g.drawLine(xTop1, 500, xTop2, 500);
+        g.drawLine(xTop1, 100, xTop1, 500);
+        g.drawLine(xTop2, 100, xTop2, 500);
     }
 
     public void updateAnimationTick() {
@@ -83,6 +88,111 @@ public class ScenePanel extends JPanel{
         }
     }
 
+    public Color redSideColor() {
+        if(firstRotation && x1 <= 380)
+        {
+            if(x1 >= 330)
+            {
+                return new Color(230,103,103);
+            }else if(x1 >= 295)
+            {
+                return new Color(219,98,98);
+            }else if(x1 >= 240)
+            {
+                return new Color(207,92,92);
+            }else if(x1 >= 180)
+            {
+                return new Color(196,87,87);
+            }else if(x1 >= 120)
+            {
+                return new Color(186,83,83);
+            }else
+            {
+                return new Color(179,80,80);
+            }
+        }
+
+        return new Color(237,107,107);
+    }
+    public Color yellowSideColor() {
+        if(secondRotation && x1 <= 380)
+        {
+            if(x1 >= 330)
+            {
+                return new Color(235,231,90);
+            }else if(x1 >= 295)
+            {
+                return new Color(224,221,86);
+            }else if(x1 >= 240)
+            {
+                return new Color(219,216,84);
+            }else if(x1 >= 180)
+            {
+                return new Color(209,206,80);
+            }else if(x1 >= 120)
+            {
+                return new Color(196,194,75);
+            }else
+            {
+                return new Color(189,187,73);
+            }
+        }
+
+        return new Color(242,237,92);
+    }
+    public Color greenSideColor() {
+        if(thirdRotation && x1 <= 380)
+        {
+            if(x1 >= 330)
+            {
+                return new Color(123,230,84);
+            }else if(x1 >= 295)
+            {
+                return new Color(119,222,81);
+            }else if(x1 >= 240)
+            {
+                return new Color(113,212,77);
+            }else if(x1 >= 180)
+            {
+                return new Color(109,201,73);
+            }else if(x1 >= 120)
+            {
+                return new Color(105,194,71);
+            }else
+            {
+                return new Color(96,179,65);
+            }
+        }
+
+        return new Color(130,242,89);
+    }
+    public Color blueSideColor() {
+        if(fourthRotation && x1 <= 380)
+        {
+            if(x1 >= 330)
+            {
+                return new Color(84,203,235);
+            }else if(x1 >= 295)
+            {
+                return new Color(80,194,224);
+            }else if(x1 >= 240)
+            {
+                return new Color(75,184,212);
+            }else if(x1 >= 180)
+            {
+                return new Color(72,177,204);
+            }else if(x1 >= 120)
+            {
+                return new Color(68,166,191);
+            }else
+            {
+                return new Color(63,153,176);
+            }
+        }
+
+        return new Color(87,209,242);
+    }
+
     public void updateCoordenates() {
         if(firstRotation)
         {
@@ -90,6 +200,7 @@ public class ScenePanel extends JPanel{
             {
                 pointsF1[0].setLocation(pointsF1[0].getX()-1, pointsF1[0].getY());
                 pointsF1[3].setLocation(pointsF1[3].getX()-1,pointsF1[3].getY());
+                xTop1 -= 1;
     
                 point1F1.setLocation(point1F1.getX()-4, point1F1.getY());
                 point2F1.setLocation(point2F1.getX()-4, point2F1.getY());
@@ -98,6 +209,7 @@ public class ScenePanel extends JPanel{
     
                 pointsF2[1].setLocation(pointsF2[1].getX()+1, pointsF2[1].getY());
                 pointsF2[2].setLocation(pointsF2[2].getX()+1, pointsF2[2].getY());
+                xTop2 += 1;
     
                 if(pointsF2[0].getX() <= 300)
                     increment = false;
@@ -105,6 +217,7 @@ public class ScenePanel extends JPanel{
             {
                 pointsF1[0].setLocation(pointsF1[0].getX()+1, pointsF1[0].getY());
                 pointsF1[3].setLocation(pointsF1[3].getX()+1,pointsF1[3].getY());
+                xTop1 += 1;
     
                 point1F1.setLocation(point1F1.getX()-4, point1F1.getY());
                 point2F1.setLocation(point2F1.getX()-4, point2F1.getY());
@@ -113,6 +226,7 @@ public class ScenePanel extends JPanel{
     
                 pointsF2[1].setLocation(pointsF2[1].getX()-1, pointsF2[1].getY());
                 pointsF2[2].setLocation(pointsF2[2].getX()-1, pointsF2[2].getY());
+                xTop2 -= 1;
     
                 if(pointsF2[0].getX() <= 100)
                 {
@@ -134,6 +248,7 @@ public class ScenePanel extends JPanel{
             {
                 pointsF2[0].setLocation(pointsF2[0].getX()-1, pointsF2[0].getY());
                 pointsF2[3].setLocation(pointsF2[3].getX()-1,pointsF2[3].getY());
+                xTop1 -= 1;
     
                 point1F2.setLocation(point1F2.getX()-4, point1F2.getY());
                 point2F2.setLocation(point2F2.getX()-4, point2F2.getY());
@@ -142,6 +257,7 @@ public class ScenePanel extends JPanel{
     
                 pointsF3[1].setLocation(pointsF3[1].getX()+1, pointsF3[1].getY());
                 pointsF3[2].setLocation(pointsF3[2].getX()+1, pointsF3[2].getY());
+                xTop2 += 1;
     
                 if(pointsF3[0].getX() <= 300)
                     increment = false;
@@ -149,6 +265,7 @@ public class ScenePanel extends JPanel{
             {
                 pointsF2[0].setLocation(pointsF2[0].getX()+1, pointsF2[0].getY());
                 pointsF2[3].setLocation(pointsF2[3].getX()+1,pointsF2[3].getY());
+                xTop1 += 1;
     
                 point1F2.setLocation(point1F2.getX()-4, point1F2.getY());
                 point2F2.setLocation(point2F2.getX()-4, point2F2.getY());
@@ -157,6 +274,7 @@ public class ScenePanel extends JPanel{
     
                 pointsF3[1].setLocation(pointsF3[1].getX()-1, pointsF3[1].getY());
                 pointsF3[2].setLocation(pointsF3[2].getX()-1, pointsF3[2].getY());
+                xTop2 -= 1;
     
                 if(pointsF3[0].getX() <= 100)
                 {
@@ -179,6 +297,7 @@ public class ScenePanel extends JPanel{
             {
                 pointsF3[0].setLocation(pointsF3[0].getX()-1, pointsF3[0].getY());
                 pointsF3[3].setLocation(pointsF3[3].getX()-1,pointsF3[3].getY());
+                xTop1 -= 1;
     
                 point1F3.setLocation(point1F3.getX()-4, point1F3.getY());
                 point2F3.setLocation(point2F3.getX()-4, point2F3.getY());
@@ -187,6 +306,7 @@ public class ScenePanel extends JPanel{
     
                 pointsF4[1].setLocation(pointsF4[1].getX()+1, pointsF4[1].getY());
                 pointsF4[2].setLocation(pointsF4[2].getX()+1, pointsF4[2].getY());
+                xTop2 += 1;
     
                 if(pointsF4[0].getX() <= 300)
                     increment = false;
@@ -194,6 +314,7 @@ public class ScenePanel extends JPanel{
             {
                 pointsF3[0].setLocation(pointsF3[0].getX()+1, pointsF3[0].getY());
                 pointsF3[3].setLocation(pointsF3[3].getX()+1,pointsF3[3].getY());
+                xTop1 += 1;
     
                 point1F3.setLocation(point1F3.getX()-4, point1F3.getY());
                 point2F3.setLocation(point2F3.getX()-4, point2F3.getY());
@@ -202,6 +323,7 @@ public class ScenePanel extends JPanel{
     
                 pointsF4[1].setLocation(pointsF4[1].getX()-1, pointsF4[1].getY());
                 pointsF4[2].setLocation(pointsF4[2].getX()-1, pointsF4[2].getY());
+                xTop2 -= 1;
     
                 if(pointsF4[0].getX() <= 100)
                 {
@@ -227,6 +349,7 @@ public class ScenePanel extends JPanel{
             {
                 pointsF4[0].setLocation(pointsF4[0].getX()-1, pointsF4[0].getY());
                 pointsF4[3].setLocation(pointsF4[3].getX()-1,pointsF4[3].getY());
+                xTop1 -= 1;
     
                 point1F4.setLocation(point1F4.getX()-4, point1F4.getY());
                 point2F4.setLocation(point2F4.getX()-4, point2F4.getY());
@@ -235,6 +358,7 @@ public class ScenePanel extends JPanel{
     
                 pointsF1[1].setLocation(pointsF1[1].getX()+1, pointsF1[1].getY());
                 pointsF1[2].setLocation(pointsF1[2].getX()+1, pointsF1[2].getY());
+                xTop2 += 1;
     
                 if(pointsF1[0].getX() <= 300)
                     increment = false;
@@ -242,6 +366,7 @@ public class ScenePanel extends JPanel{
             {
                 pointsF4[0].setLocation(pointsF4[0].getX()+1, pointsF4[0].getY());
                 pointsF4[3].setLocation(pointsF4[3].getX()+1,pointsF4[3].getY());
+                xTop1 += 1;
     
                 point1F4.setLocation(point1F4.getX()-4, point1F4.getY());
                 point2F4.setLocation(point2F4.getX()-4, point2F4.getY());
@@ -250,6 +375,7 @@ public class ScenePanel extends JPanel{
     
                 pointsF1[1].setLocation(pointsF1[1].getX()-1, pointsF1[1].getY());
                 pointsF1[2].setLocation(pointsF1[2].getX()-1, pointsF1[2].getY());
+                xTop2 -= 1;
     
                 if(pointsF1[0].getX() <= 100)
                 {
